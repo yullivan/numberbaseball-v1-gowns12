@@ -25,11 +25,13 @@ public class Application {
 
 
             // TODO: strike 개수를 계산하세요
-            int strikes = strikes(user1, user2, user3, answer);
+            int[] strikesOrBall = strikesOrBall(user1, user2, user3, answer);
 
+            int strikes = strikesOrBall[0];
+            int balls = strikesOrBall[1];
 
             // TODO: 결과를 출력하세요 (예: "1 스트라이크")
-            System.out.println(strikes + " 스트라이크");
+            System.out.println(strikes + " 스트라이크, "+balls+" 볼");
 
             // TODO: 3 스트라이크인 경우 게임을 끝내세요
             if (strikes == 3) {
@@ -56,24 +58,38 @@ public class Application {
         return answer;
     }
 
-    static int strikes(int a, int b, int c, int[] answer) {
+    static int[] strikesOrBall(int a, int b, int c, int[] answer) {
         int strikes = 0;
+        int balls = 0;
         for (int i : answer) {
             if (a == i) {
-                strikes++;
+                if (i == answer[0]) {
+                    strikes++;
+                } else {
+                    balls++;
+                }
             }
         }
         for (int i : answer) {
             if (b == i) {
-                strikes++;
+                if (i == answer[1]) {
+                    strikes++;
+                } else {
+                    balls++;
+                }
             }
         }
         for (int i : answer) {
             if (c == i) {
-                strikes++;
+                if (i == answer[2]) {
+                    strikes++;
+                } else {
+                    balls++;
+                }
             }
         }
-        return strikes;
+
+        return new int[]{strikes, balls};
     }
 
 }
