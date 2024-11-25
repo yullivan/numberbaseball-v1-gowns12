@@ -1,7 +1,6 @@
 package numberbaseball;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Application {
 
@@ -23,15 +22,20 @@ public class Application {
             System.out.print("세 번째 숫자를 입력하세요: ");
             int user3 = scanner.nextInt();
 
+            //유저 입력을 배열로 변환
+            int[] userInput = {user1, user2, user3};
+
 
             // TODO: strike 개수를 계산하세요
-            int[] strikesOrBall = strikesOrBall(user1, user2, user3, answer);
 
-            int strikes = strikesOrBall[0];
-            int balls = strikesOrBall[1];
+            //스트라이크의 개수 = strikes
+            int strikes = strikes(userInput, answer);
+
+            //볼의 개수 = balls
+            int balls = balls(userInput, answer);
 
             // TODO: 결과를 출력하세요 (예: "1 스트라이크")
-            System.out.println(strikes + " 스트라이크, "+balls+" 볼");
+            System.out.println(strikes + " 스트라이크, " + balls + " 볼");
 
             // TODO: 3 스트라이크인 경우 게임을 끝내세요
             if (strikes == 3) {
@@ -45,51 +49,64 @@ public class Application {
 
     //길이가 n인 중복되지 않는 랜덤 숫자 배열 생성
     static int[] answer() {
-        int[] answer = new int[3];
-        Random r = new Random();
-        for (int i = 0; i < answer.length; i++) {
-            answer[i] = r.nextInt(9) + 1;
-            for (int j = 0; j < i; j++) {
-                if (answer[i] == answer[j]) {
-                    i--;
-                }
-            }
-        }
-        return answer;
+        List<Integer> numberList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        Collections.shuffle(numberList);
+        return new int[]{numberList.get(0), numberList.get(1), numberList.get(2)};
     }
 
-    static int[] strikesOrBall(int a, int b, int c, int[] answer) {
+    //스트라이크의 개수를 구하는 함수
+    static int strikes(int[] user, int[] answer) {
         int strikes = 0;
-        int balls = 0;
         for (int i : answer) {
-            if (a == i) {
+            if (user[0] == i) {
                 if (i == answer[0]) {
                     strikes++;
-                } else {
-                    balls++;
                 }
             }
         }
         for (int i : answer) {
-            if (b == i) {
+            if (user[1] == i) {
                 if (i == answer[1]) {
                     strikes++;
-                } else {
+                }
+            }
+        }
+        for (int i : answer) {
+            if (user[2] == i) {
+                if (i == answer[2]) {
+                    strikes++;
+                }
+            }
+        }
+
+        return strikes;
+    }
+
+    //볼의 개수를 구하는 함수
+    static int balls(int[] user, int[] answer) {
+        int balls = 0;
+        for (int i : answer) {
+            if (user[0] == i) {
+                if (i != answer[0]) {
                     balls++;
                 }
             }
         }
         for (int i : answer) {
-            if (c == i) {
-                if (i == answer[2]) {
-                    strikes++;
-                } else {
+            if (user[1] == i) {
+                if (i != answer[1]) {
+                    balls++;
+                }
+            }
+        }
+        for (int i : answer) {
+            if (user[2] == i) {
+                if (i != answer[2]) {
                     balls++;
                 }
             }
         }
 
-        return new int[]{strikes, balls};
+        return balls;
     }
-
 }
