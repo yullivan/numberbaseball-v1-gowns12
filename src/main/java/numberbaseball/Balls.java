@@ -20,12 +20,8 @@ public class Balls {
         BallStatus ballStatus = BallStatus.NOTHING;
 
         for (Ball ball : balls) {
-            ballStatus = ball.matchStatus(userBall);
-
-            if (ballStatus.equals(BallStatus.STRIKE)) {
-                return ballStatus;
-            }
-            if (ballStatus.equals(BallStatus.BALL)) {
+            ballStatus=ball.matchStatus(userBall);
+            if (!ballStatus.equals(BallStatus.NOTHING)){
                 return ballStatus;
             }
         }
