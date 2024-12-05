@@ -5,7 +5,6 @@ import java.util.*;
 public class Application {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
         //숫자 리스트 생성[1~9]
         ArrayList<Integer> numberList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
