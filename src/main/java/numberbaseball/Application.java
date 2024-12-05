@@ -7,106 +7,56 @@ public class Application {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("숫자 야구 게임을 시작합니다!");
-        System.out.println("1부터 9까지의 서로 다른 숫자 3개를 맞춰보세요.");
+        //숫자 리스트 생성[1~9]
+        ArrayList<Integer> numberList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
 
-        //중복되지 않는 랜덤한 숫자 3개 생성
-        int[] answer = answer();
+        //숫자 리스트에서 랜덤한 숫자를 골라 정답지 생성
+        Ball ball1 = Utils.answerBall(1, numberList);
+        Ball ball2 = Utils.answerBall(2, numberList);
+        Ball ball3 = Utils.answerBall(3, numberList);
+        Balls balls = new Balls(new ArrayList<>(List.of(ball1, ball2, ball3)));
 
-        while (true) {
-            // 사용자 입력 받기 (이 부분은 완성되어 있음)
-            System.out.print("\n첫 번째 숫자를 입력하세요: ");
-            int user1 = scanner.nextInt();
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            int user2 = scanner.nextInt();
-            System.out.print("세 번째 숫자를 입력하세요: ");
-            int user3 = scanner.nextInt();
+        //스트라이크와 볼 카운트 생성
+        int strikeCount = 0;
+        int ballCount = 0;
 
-            //유저 입력을 배열로 변환
-            int[] userInput = {user1, user2, user3};
+        System.out.println("게임 시작");
 
+        //스트라이크가 3이 될때 까지 반복
+        while (strikeCount < 3) {
+            System.out.println("숫자를 입력하세요. [1~9]");
 
-            // TODO: strike 개수를 계산하세요
+            //유저의 정답 입력(1~9 이외의 값을 입력하면 다시 입력)
+            Ball userBall1 = Utils.userBallInput(1);
+            Ball userBall2 = Utils.userBallInput(2);
+            Ball userBall3 = Utils.userBallInput(3);
 
-            //스트라이크의 개수 = strikes
-            int strikes = strikes(userInput, answer);
+            //스트라이크와 볼 판정
+            String ball1MatchStatus = balls.matchStatus(userBall1);
+            String ball2MatchStatus = balls.matchStatus(userBall2);
+            String ball3MatchStatus = balls.matchStatus(userBall3);
 
-            //볼의 개수 = balls
-            int balls = balls(userInput, answer);
+            //스트라이크와 볼 카운트 계산
+            strikeCount = Utils.strikeCount(ball1MatchStatus, ball2MatchStatus, ball3MatchStatus);
+            ballCount = Utils.ballCount(ball1MatchStatus, ball2MatchStatus, ball3MatchStatus);
 
-            // TODO: 결과를 출력하세요 (예: "1 스트라이크")
-            System.out.println(strikes + " 스트라이크, " + balls + " 볼");
+            //결과 출력
+            Utils.gameResult(strikeCount, ballCount);
 
-            // TODO: 3 스트라이크인 경우 게임을 끝내세요
-            if (strikes == 3) {
-                break;
-            }
+            //정답을 맞추면 게임을 다시 할지 물어보고 리셋
+            if (strikeCount == 3) {
+                Utils.askToRestartGame();
+                if (Utils.askToRestartGameInput().equals("y")) {
+                    strikeCount = 0;
+                    numberList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
+                    ball1 = Utils.answerBall(1, numberList);
+                    ball2 = Utils.answerBall(2, numberList);
+                    ball3 = Utils.answerBall(3, numberList);
 
-        }
-
-        System.out.println("축하합니다! 정답을 맞추셨습니다.");
-    }
-
-    //길이가 n인 중복되지 않는 랜덤 숫자 배열 생성
-    static int[] answer() {
-        List<Integer> numberList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9));
-        Collections.shuffle(numberList);
-        return new int[]{numberList.get(0), numberList.get(1), numberList.get(2)};
-    }
-
-    //스트라이크의 개수를 구하는 함수
-    static int strikes(int[] user, int[] answer) {
-        int strikes = 0;
-        for (int i : answer) {
-            if (user[0] == i) {
-                if (i == answer[0]) {
-                    strikes++;
+                    balls = new Balls(new ArrayList<>(List.of(ball1, ball2, ball3)));
                 }
             }
         }
-        for (int i : answer) {
-            if (user[1] == i) {
-                if (i == answer[1]) {
-                    strikes++;
-                }
-            }
-        }
-        for (int i : answer) {
-            if (user[2] == i) {
-                if (i == answer[2]) {
-                    strikes++;
-                }
-            }
-        }
-
-        return strikes;
-    }
-
-    //볼의 개수를 구하는 함수
-    static int balls(int[] user, int[] answer) {
-        int balls = 0;
-        for (int i : answer) {
-            if (user[0] == i) {
-                if (i != answer[0]) {
-                    balls++;
-                }
-            }
-        }
-        for (int i : answer) {
-            if (user[1] == i) {
-                if (i != answer[1]) {
-                    balls++;
-                }
-            }
-        }
-        for (int i : answer) {
-            if (user[2] == i) {
-                if (i != answer[2]) {
-                    balls++;
-                }
-            }
-        }
-
-        return balls;
+        System.out.println("게임 종료");
     }
 }
