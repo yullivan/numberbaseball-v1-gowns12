@@ -13,12 +13,12 @@ public class Ball {
         this.number = number;
     }
 
-    public String matchStatus(Ball answerBall) {
+    public BallStatus matchStatus(Ball answerBall) {
         if (answerBall.position==this.position&&answerBall.number==this.number){
-            return "STRIKE";
+            return BallStatus.STRIKE;
         } else if (answerBall.position!=this.position&&answerBall.number==this.number) {
-            return "BALL";
+            return BallStatus.BALL;
         }
-        else return "NOTHING";
+        else return BallStatus.NOTHING;
     }
 }

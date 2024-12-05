@@ -15,16 +15,16 @@ public class Balls {
     }
 
     //스트라이크, 볼 판정
-    public String matchStatus(Ball userBall) {
+    public BallStatus matchStatus(Ball userBall) {
         if (Balls.get(userBall.position-1).number == userBall.number) {
-            return "STRIKE";
+            return BallStatus.STRIKE;
         } else{
             for (Ball ball : Balls) {
                 if (ball.number== userBall.number){
-                    return "BALL";
+                    return BallStatus.BALL;
                 }
             }
         }
-        return "NOTHING";
+        return BallStatus.NOTHING;
     }
 }

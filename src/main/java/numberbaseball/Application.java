@@ -31,9 +31,9 @@ public class Application {
             Ball userBall3 = Utils.userBallInput(3);
 
             //스트라이크와 볼 판정
-            String ball1MatchStatus = balls.matchStatus(userBall1);
-            String ball2MatchStatus = balls.matchStatus(userBall2);
-            String ball3MatchStatus = balls.matchStatus(userBall3);
+            BallStatus ball1MatchStatus = balls.matchStatus(userBall1);
+            BallStatus ball2MatchStatus = balls.matchStatus(userBall2);
+            BallStatus ball3MatchStatus = balls.matchStatus(userBall3);
 
             //스트라이크와 볼 카운트 계산
             strikeCount = Utils.strikeCount(ball1MatchStatus, ball2MatchStatus, ball3MatchStatus);

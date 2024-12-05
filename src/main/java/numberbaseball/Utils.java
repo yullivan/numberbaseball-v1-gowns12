@@ -21,21 +21,21 @@ public class Utils {
     }
 
     //스트라이크 카운트 계산
-    public static int strikeCount(String ball1, String ball2, String ball3) {
+    public static int strikeCount(BallStatus ball1, BallStatus ball2, BallStatus ball3) {
         int strikes = 0;
-        ArrayList<String> ballList = new ArrayList<>(List.of(ball1, ball2, ball3));
-        for (String ball : ballList) {
-            if (ball.equals("STRIKE")) strikes++;
+        ArrayList<BallStatus> ballList = new ArrayList<>(List.of(ball1, ball2, ball3));
+        for (BallStatus ball : ballList) {
+            if (ball.equals(BallStatus.STRIKE)) strikes++;
         }
         return strikes;
     }
 
     //볼 카운트 계산
-    public static int ballCount(String ball1, String ball2, String ball3) {
+    public static int ballCount(BallStatus ball1, BallStatus ball2, BallStatus ball3) {
         int balls = 0;
-        ArrayList<String> ballList = new ArrayList<>(List.of(ball1, ball2, ball3));
-        for (String ball : ballList) {
-            if (ball.equals("BALL")) balls++;
+        ArrayList<BallStatus> ballList = new ArrayList<>(List.of(ball1, ball2, ball3));
+        for (BallStatus ball : ballList) {
+            if (ball.equals(BallStatus.BALL)) balls++;
         }
         return balls;
     }
